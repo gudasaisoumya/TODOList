@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="lst.css">
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <title>To Do list</title>
+        <style>
+table, th, td {
+  border-collapse:collapse;
+   border:3px solid rgb(250, 245, 245);
+}
+    </style>
+  </head>
+  <body>
+    <div id="app" />
+    <script type="text/babel">
+
+      class Counter extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            tasks:[],
+            input: "",
+            count:0,
+            restore:[]
+          };
+        }
+
+        render() {
+          return (
+            <div class="center">
+            <h1>To Do list</h1>
+                <table class="center">
+                {this.state.tasks.map((task, i) =>
+                    <tr class="li"  key= {i}>
+                       <td> {task}</td>
+                       <td> <button class="button" onClick={(event)=>{this.deleteTask(event,i)}}>Clear</button>
+                       </td>
+                        </tr>
+                        )}
+                </table>
+            
+              
+              <input class="box" onKeyPress={this.inputKeyPress} onChange={this.handleChange} value={this.state.input} />
+              <button class="button" onClick={this.addtask}>Add task</button>
+              <h2>Remaining tasks:{this.state.count}</h2>
+            
+
+              <h1>Deleted Tasks</h1>
+              
+              <ul>
+                  {this.state.restore.map((task, i) =>
+                  <li class="li" key={i}>
+                      {task} &nbsp;
+                     
+                  </li>
+                  
+                  )} <br/>
+              </ul>
+
+              
+
+            </div>
+            
+            
+          );
+        }
+
+     
+       
+
+
+        inputKeyPress = (event) => {
+          if (event.key === "Enter") {
+            this.setState(state => ({
+            tasks: [...state.tasks, state.input],
+            input:"",
+            count: this.state.count + 1
+          }))        
+                        }
+                        }
+        handleChange = (event) => {
+                    this.setState({
+            input: event.target.value
+            });
+        }
+
+      deleteTask=(event,i)=>{
+        var n=[...this.state.tasks]
+        this.state.restore=[...this.state.restore,n.splice(i,1)]
+        
+        this.setState(state=>({
+          tasks:n,
+          count: this.state.count-1
+        }));
+        console.log(this.state.restore)
+
+      }
+
+        addtask = () => {
+          this.setState(state => ({
+            tasks: [...state.tasks, state.input],
+            input:"",
+            count: this.state.count + 1
+          }))
+        }
+
+       
+      }
+
+        
+
+      class App extends React.Component {
+
+        render() {
+          return (
+            <div>
+              <Counter />
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(<App />, document.querySelector("#app"));
+
+    </script>
+  </body>
+</html>
+
+
