@@ -1,2 +1,4 @@
-["Getting up at 6 AM", "Workout","Getting ready for class"]
-count:3;
+{
+  "name":"Getting up at 6",
+  "count":1
+}
